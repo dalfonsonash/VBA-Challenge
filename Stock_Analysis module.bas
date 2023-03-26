@@ -43,7 +43,8 @@ Sub stock_analysis()
         Dim greatest_volume_ticker As String
     
     For Each ws In ThisWorkbook.Worksheets
-    
+    ws.Activate
+
         ' Set initial values for variables
         summary_row = 2
         greatest_increase = 0
@@ -51,17 +52,17 @@ Sub stock_analysis()
         greatest_volume = 0
 
         ' Loop through all stocks
-        For i = 2 To Cells(Rows.Count, 1).End(xlUp).Row
+        For i = 2 To ws.Cells(Rows.Count, 1).End(xlUp).Row
 
             ' Check if we are still on the same ticker or if we have moved on to a new one
-            If Cells(i + 1, 1).Value <> Cells(i, 1).Value Then
+            If ws.Cells(i + 1, 1).Value <> ws.Cells(i, 1).Value Then
 
                 ' Set ticker variable
-                ticker = Cells(i, 1).Value
+                ticker = ws.Cells(i, 1).Value
 
                 ' Set opening and closing prices
-                opening_price = Cells(i - 11, 3).Value
-                closing_price = Cells(i, 6).Value
+                opening_price = ws.Cells(i - 11, 3).Value
+                closing_price = ws.Cells(i, 6).Value
 
                 ' Calculate yearly change and percent change
                 yearly_change = closing_price - opening_price
@@ -71,18 +72,18 @@ Sub stock_analysis()
                 total_volume = Application.Sum(Range(Cells(i - 11, 7), Cells(i, 7)))
 
                 ' Print results to summary table
-                Cells(summary_row, 9).Value = ticker
-                Cells(summary_row, 10).Value = yearly_change
+                ws.Cells(summary_row, 9).Value = ticker
+                ws.Cells(summary_row, 10).Value = yearly_change
 
                 ' Apply conditional formatting to yearly change column
                 If yearly_change > 0 Then
-                    Cells(summary_row, 10).Interior.ColorIndex = 4 ' Green
+                    ws.Cells(summary_row, 10).Interior.ColorIndex = 4 ' Green
                 Else
-                    Cells(summary_row, 10).Interior.ColorIndex = 3 ' Red
+                    ws.Cells(summary_row, 10).Interior.ColorIndex = 3 ' Red
                 End If
 
-                Cells(summary_row, 11).Value = percent_change
-                Cells(summary_row, 12).Value = total_volume
+                ws.Cells(summary_row, 11).Value = percent_change
+                ws.Cells(summary_row, 12).Value = total_volume
 
                 ' Find greatest increase, greatest decrease, and greatest volume
                 If percent_change > greatest_increase Then
@@ -108,13 +109,13 @@ Sub stock_analysis()
         Next i
     
         ' Print results for greatest increase, greatest decrease, and greatest volume
-        Cells(2, 16).Value = greatest_increase_ticker
-        Cells(2, 17).Value = greatest_increase
-        Cells(3, 16).Value = greatest_decrease_ticker
-        Cells(3, 17).Value = greatest_decrease
-        Cells(4, 16).Value = greatest_volume_ticker
-        Cells(4, 17).Value = greatest_volume
-        Columns("A:S").AutoFit
+        ws.Cells(2, 16).Value = greatest_increase_ticker
+        ws.Cells(2, 17).Value = greatest_increase
+        ws.Cells(3, 16).Value = greatest_decrease_ticker
+        ws.Cells(3, 17).Value = greatest_decrease
+        ws.Cells(4, 16).Value = greatest_volume_ticker
+        ws.Cells(4, 17).Value = greatest_volume
+        ws.Columns("A:S").AutoFit
     Next ws
 
 End Sub
