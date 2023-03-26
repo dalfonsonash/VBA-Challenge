@@ -41,7 +41,9 @@ Sub stock_analysis()
         Dim greatest_increase_ticker As String
         Dim greatest_decrease_ticker As String
         Dim greatest_volume_ticker As String
-
+    
+    For Each ws In ThisWorkbook.Worksheets
+    
         ' Set initial values for variables
         summary_row = 2
         greatest_increase = 0
@@ -105,14 +107,15 @@ Sub stock_analysis()
 
         Next i
     
-    ' Print results for greatest increase, greatest decrease, and greatest volume
-    Cells(2, 16).Value = greatest_increase_ticker
-    Cells(2, 17).Value = greatest_increase
-    Cells(3, 16).Value = greatest_decrease_ticker
-    Cells(3, 17).Value = greatest_decrease
-    Cells(4, 16).Value = greatest_volume_ticker
-    Cells(4, 17).Value = greatest_volume
-    Columns("A:S").AutoFit
+        ' Print results for greatest increase, greatest decrease, and greatest volume
+        Cells(2, 16).Value = greatest_increase_ticker
+        Cells(2, 17).Value = greatest_increase
+        Cells(3, 16).Value = greatest_decrease_ticker
+        Cells(3, 17).Value = greatest_decrease
+        Cells(4, 16).Value = greatest_volume_ticker
+        Cells(4, 17).Value = greatest_volume
+        Columns("A:S").AutoFit
+    Next ws
 
 End Sub
 
