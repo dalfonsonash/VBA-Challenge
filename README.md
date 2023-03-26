@@ -5,4 +5,6 @@
 # Ran a second script in Chat GPT.  https://chat.openai.com/chat
 #Chat GPT used to assist in VBA scripting for column autofit, and assisted in looping through stock data.
 #https://chat.openai.com/chat/eebbae24-b151-4ac6-b0d0-d40123252aae
-   
+# Ticker symbols were not populating correctly in column I.  Following StackOveflow link provided answer to ticker symbol output loop.
+https://stackoverflow.com/questions/62471422/vba-loop-how-to-get-ticker-symbols-into-ticker-column
+
