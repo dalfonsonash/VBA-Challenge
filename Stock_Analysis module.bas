@@ -91,6 +91,7 @@ Sub stock_analysis()
     Cells(3, 17).Value = greatest_decrease
     Cells(4, 16).Value = greatest_volume_ticker
     Cells(4, 17).Value = greatest_volume
-    
+    Columns("A:S").AutoFit
+
 End Sub
 
