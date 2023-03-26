@@ -15,14 +15,13 @@ Sub stock_analysis()
     For Each ws In ThisWorkbook.Worksheets
     
     'Set headers.
-        ws.Range("I1").Value = "Ticker"
+        ws.Range("I1,P1").Value = "Ticker"
         ws.Range("J1").Value = "Yearly Change"
         ws.Range("K1").Value = "Percent Change"
         ws.Range("L1").Value = "Total Stock Volume"
         ws.Range("O2").Value = "Greatest % Increase"
         ws.Range("O3").Value = "Greatest % Decrease"
         ws.Range("O4").Value = "Greatest Total Volume"
-        ws.Range("P1").Value = "Ticker"
         ws.Range("Q1").Value = "Value"
 
     Next ws
@@ -43,7 +42,7 @@ Sub stock_analysis()
         Dim greatest_volume_ticker As String
     
     For Each ws In ThisWorkbook.Worksheets
-    ws.Activate
+      ws.Activate
 
         ' Set initial values for variables
         summary_row = 2
@@ -69,7 +68,7 @@ Sub stock_analysis()
                 percent_change = yearly_change / opening_price
 
                 ' Add total volume
-                total_volume = Application.Sum(Range(Cells(i - 11, 7), Cells(i, 7)))
+                total_volume = Application.Sum(Range(ws.Cells(i - 11, 7), ws.Cells(i, 7)))
 
                 ' Print results to summary table
                 ws.Cells(summary_row, 9).Value = ticker
@@ -83,6 +82,7 @@ Sub stock_analysis()
                 End If
 
                 ws.Cells(summary_row, 11).Value = percent_change
+                ws.Cells(summary_row, 11).NumberFormat = "0.00%"
                 ws.Cells(summary_row, 12).Value = total_volume
 
                 ' Find greatest increase, greatest decrease, and greatest volume
@@ -111,12 +111,15 @@ Sub stock_analysis()
         ' Print results for greatest increase, greatest decrease, and greatest volume
         ws.Cells(2, 16).Value = greatest_increase_ticker
         ws.Cells(2, 17).Value = greatest_increase
+        ws.Cells(2, 17).NumberFormat = "0.00%"
         ws.Cells(3, 16).Value = greatest_decrease_ticker
         ws.Cells(3, 17).Value = greatest_decrease
+        ws.Cells(3, 17).NumberFormat = "0.00%"
         ws.Cells(4, 16).Value = greatest_volume_ticker
         ws.Cells(4, 17).Value = greatest_volume
         ws.Columns("A:S").AutoFit
     Next ws
 
 End Sub
+
 
