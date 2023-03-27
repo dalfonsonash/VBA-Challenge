@@ -13,7 +13,7 @@ Sub stock_analysis()
     Set wb = ActiveWorkbook
     
     For Each ws In ThisWorkbook.Worksheets
-    
+        ws.Activate
     'Set headers.
         ws.Range("I1,P1").Value = "Ticker"
         ws.Range("J1").Value = "Yearly Change"
@@ -42,7 +42,7 @@ Sub stock_analysis()
         Dim greatest_volume_ticker As String
     
     For Each ws In ThisWorkbook.Worksheets
-      ws.Activate
+      
 
         ' Set initial values for variables
         summary_row = 2
@@ -51,16 +51,24 @@ Sub stock_analysis()
         greatest_volume = 0
 
         ' Loop through all stocks
-        For i = 2 To ws.Cells(Rows.Count, 1).End(xlUp).Row
+         last_row = ws.Cells(Rows.Count, 1).End(xlUp).Row
 
+            
+          For i = 2 To last_row
+            
             ' Check if we are still on the same ticker or if we have moved on to a new one
             If ws.Cells(i + 1, 1).Value <> ws.Cells(i, 1).Value Then
 
                 ' Set ticker variable
                 ticker = ws.Cells(i, 1).Value
-
-                ' Set opening and closing prices
-                opening_price = ws.Cells(i - 11, 3).Value
+                
+                'Loop through all prices for the ticker
+                Dim ticker_row As Long
+                ticker_row = i
+                Do While ws.Cells(ticker_row - 1, 1).Value = ticker
+                ticker_row = ticker_row - 1
+                Loop
+                opening_price = ws.Cells(ticker_row, 3).Value
                 closing_price = ws.Cells(i, 6).Value
 
                 ' Calculate yearly change and percent change
@@ -121,5 +129,6 @@ Sub stock_analysis()
     Next ws
 
 End Sub
+
 
 
